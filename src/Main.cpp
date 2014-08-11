@@ -1,4 +1,5 @@
 #include <SDL/SDL.h>  // Pull in the SDL definitions
+#include "SDL/SDL_ttf.h"
 #include <vector>     // Pull in the std::vector
 #include <memory>     // Pull in std::shared_ptr
 
@@ -36,6 +37,12 @@ SFError InitGraphics() {
   if (!(SDL_SetVideoMode(width, height, colour_depth, SDL_DOUBLEBUF))) {
     cerr << "Failed to initialise video mode: " << SDL_GetError() << endl;
     throw SF_ERROR_VIDEOMODE;
+  }
+  
+  if(TTF_Init() == -1)
+  {
+    std::cout << "failed to load SDL_TTF\n";
+    return SF_ERROR_INIT;
   }
 
   SDL_WM_SetCaption("Starship Fontana", "Starship Fontana");

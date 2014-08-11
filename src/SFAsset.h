@@ -13,6 +13,7 @@ using namespace std;
 #include "SFCommon.h"
 #include "SFEvent.h"
 #include "SFBoundingBox.h"
+#include "SFApp.h"
 
 /**
  * We could create SFPlayer, SFProjectile and SFAsset which are subclasses

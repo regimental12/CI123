@@ -1,4 +1,5 @@
 #include "SFAsset.h"
+#include "SFApp.h"
 
 int SFAsset::SFASSETID=0;
 
@@ -32,6 +33,7 @@ SFAsset::SFAsset(SFASSETTYPE type) {
 
   // Initialise bounding box
   bbox = make_shared<SFBoundingBox>(SFBoundingBox(Vector2(0.0f, 0.0f), sprite->w, sprite->h));
+  
 }
 
 SFAsset::SFAsset(const SFAsset& a) {
@@ -138,5 +140,8 @@ bool SFAsset::IsAlive() {
 void SFAsset::HandleCollision() {
   if(SFASSET_PROJECTILE == type || SFASSET_ALIEN == type) {
     SetNotAlive();
+    
   }
 }
+
+

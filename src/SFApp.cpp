@@ -1,4 +1,11 @@
 #include "SFApp.h"
+#include "SFAsset.h"
+
+int SFApp::getint()
+{
+  return i;
+}
+
 
 SFApp::SFApp() : fire(0), is_running(true) {
 
@@ -21,6 +28,17 @@ SFApp::SFApp() : fire(0), is_running(true) {
   auto pos  = Point2((surface->w/4), 100);
   coin->SetPosition(pos);
   coins.push_back(coin);
+  
+  background = IMG_Load("assets/background.png");
+  
+  textcolor = {255,255,255};
+  
+  font = TTF_OpenFont("src/Starjedi.ttf" , 28);
+  if(font == NULL)
+  {
+    std::cout << "ttf fail\n";
+    return;
+  }  
 }
 
 SFApp::~SFApp() {
@@ -89,7 +107,9 @@ void SFApp::OnUpdateWorld() {
       if(p->CollidesWith(a)) {
         p->HandleCollision();
         a->HandleCollision();
+	i += 10;
       }
+      
     }
   }
 
@@ -102,11 +122,16 @@ void SFApp::OnUpdateWorld() {
   }
   aliens.clear();
   aliens = list<shared_ptr<SFAsset>>(tmp);
+  sprintf(text , "player score: %d" , i  );
 }
 
 void SFApp::OnRender() {
   // clear the surface
+  
   SDL_FillRect(surface, NULL, SDL_MapRGB(surface->format, 8, 54, 129) );
+  SDL_BlitSurface(background , NULL , surface , NULL);
+  score = TTF_RenderText_Solid(font , text , textcolor );
+  SDL_BlitSurface(score , NULL , surface , NULL);
 
   // draw the player
   player->OnRender(surface);
@@ -122,7 +147,7 @@ void SFApp::OnRender() {
   for(auto c: coins) {
     c->OnRender(surface);
   }
-
+  
   // Switch the off-screen buffer to be on-screen
   SDL_Flip(surface);
 }
