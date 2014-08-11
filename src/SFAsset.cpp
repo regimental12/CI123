@@ -16,7 +16,7 @@ SFAsset::SFAsset(SFASSETTYPE type) {
     tmp_surf = IMG_Load("assets/projectile.png");
     break;
   case SFASSET_ALIEN:
-    tmp_surf = IMG_Load("assets/alien.png");
+    tmp_surf = IMG_Load("assets/1.png");
     break;
   case SFASSET_COIN:
     tmp_surf = IMG_Load("assets/coin.png");

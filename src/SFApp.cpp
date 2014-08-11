@@ -9,6 +9,9 @@ int SFApp::getint()
 
 SFApp::SFApp() : fire(0), is_running(true) {
 
+
+  background = IMG_Load("assets/background.png");
+  
   surface = SDL_GetVideoSurface();
   app_box = make_shared<SFBoundingBox>(Vector2(surface->w/2, surface->h/2), surface->w/2, surface->h/2);
   player  = make_shared<SFAsset>(SFASSET_PLAYER);
@@ -24,7 +27,7 @@ SFApp::SFApp() : fire(0), is_running(true) {
     aliens.push_back(alien);
   }
   
-  background = IMG_Load("assets/background.png");
+  
   
   textcolor = {255,255,255};
   
@@ -160,12 +163,14 @@ void SFApp::OnRender() {
   SDL_BlitSurface(score , NULL , surface , NULL);
 
   // draw the player
-  player->OnRender(surface);
+  
 
   for(auto p: projectiles) {
     if(p->IsAlive()) {p->OnRender(surface);}
   }
 
+  player->OnRender(surface);
+  
   for(auto a: aliens) {
     if(a->IsAlive()) {a->OnRender(surface);}
   }
