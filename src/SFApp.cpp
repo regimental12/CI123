@@ -23,11 +23,6 @@ SFApp::SFApp() : fire(0), is_running(true) {
     alien->SetPosition(pos);
     aliens.push_back(alien);
   }
-
-  /*auto coin = make_shared<SFAsset>(SFASSET_COIN);
-  auto pos  = Point2((surface->w/4), 100);
-  coin->SetPosition(pos);
-  coins.push_back(coin);*/
   
   background = IMG_Load("assets/background.png");
   
@@ -39,6 +34,14 @@ SFApp::SFApp() : fire(0), is_running(true) {
     std::cout << "ttf fail\n";
     return;
   }  
+  
+  fireP = Mix_LoadWAV("assets/turret.wav");
+  death = Mix_LoadWAV("assets/XPLOMAS2.WAV") ;
+  if(death == NULL || fireP == NULL)
+  {
+    std::cout << "wtf";
+  }
+  
 }
 
 SFApp::~SFApp() {
@@ -67,6 +70,7 @@ void SFApp::OnEvent(SFEvent& event) {
     break;
   case SFEVENT_FIRE:
     fire ++;
+    
     std::stringstream sstm;
     sstm << "Fire " << fire;
     //SDL_WM_SetCaption(sstm.str().c_str(),  sstm.str().c_str());
@@ -121,6 +125,7 @@ void SFApp::OnUpdateWorld() {
       if(p->CollidesWith(a)) {
         p->HandleCollision();
         a->HandleCollision();
+	Mix_PlayChannel(-1 , death , 0);
 	i += 10;
 	makeCoin();
       }
@@ -178,6 +183,7 @@ void SFApp::FireProjectile() {
   auto v  = player->GetPosition();
   pb->SetPosition(v);
   projectiles.push_back(pb);
+  Mix_PlayChannel(-1 , fireP , 0 );
 }
 
 void SFApp::gameOver()

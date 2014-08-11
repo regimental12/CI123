@@ -15,6 +15,7 @@ using namespace std;
 #include "SDL/SDL.h"
 #include "SDL/SDL_image.h"
 #include "SDL/SDL_ttf.h"
+#include "SDL/SDL_mixer.h"
 
 /**
  * Represents the StarshipFontana application.  It has responsibilities for
@@ -42,6 +43,9 @@ public:
 private:
   SDL_Surface           * surface;
   SDL_Surface 		* background;
+ 
+  Mix_Chunk *fireP = NULL;
+  Mix_Chunk *death = NULL;
   
   bool                    is_running;
 

@@ -1,5 +1,6 @@
 #include <SDL/SDL.h>  // Pull in the SDL definitions
 #include "SDL/SDL_ttf.h"
+#include "SDL/SDL_mixer.h"
 #include <vector>     // Pull in the std::vector
 #include <memory>     // Pull in std::shared_ptr
 
@@ -42,6 +43,12 @@ SFError InitGraphics() {
   if(TTF_Init() == -1)
   {
     std::cout << "failed to load SDL_TTF\n";
+    return SF_ERROR_INIT;
+  }
+  
+  if(Mix_OpenAudio(22050 , MIX_DEFAULT_FORMAT , 2 , 4096) == -1)
+  {
+    std::cout << "failed to load audio";
     return SF_ERROR_INIT;
   }
 
