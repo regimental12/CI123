@@ -24,10 +24,10 @@ SFApp::SFApp() : fire(0), is_running(true) {
     aliens.push_back(alien);
   }
 
-  auto coin = make_shared<SFAsset>(SFASSET_COIN);
+  /*auto coin = make_shared<SFAsset>(SFASSET_COIN);
   auto pos  = Point2((surface->w/4), 100);
   coin->SetPosition(pos);
-  coins.push_back(coin);
+  coins.push_back(coin);*/
   
   background = IMG_Load("assets/background.png");
   
@@ -94,10 +94,24 @@ void SFApp::OnUpdateWorld() {
 
   for(auto c: coins) {
     c->GoSouth();
+    if(player->CollidesWith(c))
+    {
+      pickup();
+      c->HandleCollision();
+    }
   }
+  list<shared_ptr<SFAsset>> tmp1;
+  for(auto a : coins) {
+    if(a->IsAlive()) {
+      tmp1.push_back(a);
+    }
+  }
+  coins.clear();
+  coins = list<shared_ptr<SFAsset>>(tmp1);
+  
+  
 
   // Update enemy positions
-  
   for(auto a : aliens) {
   }
 
@@ -108,6 +122,7 @@ void SFApp::OnUpdateWorld() {
         p->HandleCollision();
         a->HandleCollision();
 	i += 10;
+	makeCoin();
       }
       
     }
@@ -126,6 +141,8 @@ void SFApp::OnUpdateWorld() {
   {
     gameOver();
   }
+  
+  
   sprintf(text , "player score: %d" , i  );
 }
 
@@ -176,4 +193,24 @@ void SFApp::gameOver()
   TTF_Quit();
   is_running = false;
 }
+
+void SFApp::makeCoin()
+{
+  if(i > 10)
+  {
+    if (aliens.size() % 2 == 0)
+    {
+      auto coin = make_shared<SFAsset>(SFASSET_COIN);
+      auto pos  = Point2((surface->w/4), 450);
+      coin->SetPosition(pos);
+      coins.push_back(coin);
+    }
+  }
+}
+
+void SFApp::pickup()
+{
+      i +=100;
+}
+
 

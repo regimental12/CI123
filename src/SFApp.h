@@ -30,12 +30,15 @@ public:
   void    OnUpdateWorld();
   void    OnRender();
   void 	  gameOver();
+  void	  makeCoin();
+  void    pickup();
 
   void    FireProjectile();
   int getint();
   SDL_Surface		* score;
   TTF_Font 		* font;
   SDL_Color 		  textcolor;
+  
 private:
   SDL_Surface           * surface;
   SDL_Surface 		* background;
@@ -47,6 +50,7 @@ private:
   list<shared_ptr<SFAsset> > projectiles;
   list<shared_ptr<SFAsset> > aliens;
   list<shared_ptr<SFAsset> > coins;
+  
 
   int fire;
   int i = 0;
