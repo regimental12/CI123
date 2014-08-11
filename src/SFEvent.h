@@ -16,7 +16,7 @@ enum SFEVENT {SFEVENT_NULL, SFEVENT_QUIT, SFEVENT_UPDATE, SFEVENT_PLAYER_LEFT, S
  */
 class SFEvent {
 public:
-  SFEvent(const SDL_Event &);
+  SFEvent(const SDL_Event& event);
   SFEVENT GetCode();
 private:
   SFEVENT code;

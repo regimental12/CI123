@@ -11,6 +11,7 @@ using namespace std;
 #include "SFCommon.h"
 #include "SFEvent.h"
 #include "SFAsset.h"
+#include "SFMath.h"
 #include "SDL/SDL.h"
 #include "SDL/SDL_image.h"
 #include "SDL/SDL_ttf.h"
@@ -28,6 +29,7 @@ public:
   int     OnExecute();
   void    OnUpdateWorld();
   void    OnRender();
+  void 	  gameOver();
 
   void    FireProjectile();
   int getint();
@@ -48,7 +50,7 @@ private:
 
   int fire;
   int i = 0;
-   char text[20];
+  char text[20];
 
   SFError OnInit();
 };

@@ -19,7 +19,7 @@ SFApp::SFApp() : fire(0), is_running(true) {
   for(int i=0; i<number_of_aliens; i++) {
     // place an alien at width/number_of_aliens * i
     auto alien = make_shared<SFAsset>(SFASSET_ALIEN);
-    auto pos   = Point2((surface->w/number_of_aliens) * i, 200.0f);
+    auto pos   = Point2((surface->w/number_of_aliens) * i + 30, 400.0f);
     alien->SetPosition(pos);
     aliens.push_back(alien);
   }
@@ -50,7 +50,7 @@ SFApp::~SFApp() {
  */
 void SFApp::OnEvent(SFEvent& event) {
   SFEVENT the_event = event.GetCode();
-  
+    
   switch (the_event) {
   case SFEVENT_QUIT:
     is_running = false;
@@ -69,7 +69,7 @@ void SFApp::OnEvent(SFEvent& event) {
     fire ++;
     std::stringstream sstm;
     sstm << "Fire " << fire;
-    SDL_WM_SetCaption(sstm.str().c_str(),  sstm.str().c_str());
+    //SDL_WM_SetCaption(sstm.str().c_str(),  sstm.str().c_str());
     FireProjectile();
     break;
   }
@@ -97,8 +97,8 @@ void SFApp::OnUpdateWorld() {
   }
 
   // Update enemy positions
+  
   for(auto a : aliens) {
-    // do something here
   }
 
   // Detect collisions
@@ -122,6 +122,10 @@ void SFApp::OnUpdateWorld() {
   }
   aliens.clear();
   aliens = list<shared_ptr<SFAsset>>(tmp);
+  if(aliens.empty())
+  {
+    gameOver();
+  }
   sprintf(text , "player score: %d" , i  );
 }
 
@@ -158,3 +162,18 @@ void SFApp::FireProjectile() {
   pb->SetPosition(v);
   projectiles.push_back(pb);
 }
+
+void SFApp::gameOver()
+{
+  char gameOverText[20];
+  sprintf(gameOverText , "game over");
+  SDL_FillRect(surface, NULL, SDL_MapRGB(surface->format, 0, 0, 0) );
+  SDL_Surface* text = TTF_RenderText_Solid(font , gameOverText , textcolor);
+  SDL_BlitSurface(text , NULL , surface , NULL);
+  SDL_Flip(surface);
+  SDL_Delay(3000);
+  TTF_CloseFont(font);
+  TTF_Quit();
+  is_running = false;
+}
+

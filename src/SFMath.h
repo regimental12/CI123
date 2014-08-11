@@ -54,9 +54,16 @@ public:
   inline Point2(const Point2 &);
   inline const float getX() const;
   inline const float getY() const;
+  inline Point2 operator - (Point2 & p1 );
 private:
   float m_x, m_y;
 };
+
+inline Point2 Point2::operator-(Point2& p1)
+{
+    return Point2(m_x-p1.getX() , m_y - p1.getY());
+}
+
 
 inline Point2::Point2 (const float x, const float y) : m_x(x), m_y(y) {}
 
